@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using JamesWebApp.Models;
 
 namespace JamesWebApp.Data
 {
@@ -9,5 +10,6 @@ namespace JamesWebApp.Data
             : base(options)
         {
         }
+        public DbSet<JamesWebApp.Models.TimeClock> TimeClock { get; set; }
     }
 }
