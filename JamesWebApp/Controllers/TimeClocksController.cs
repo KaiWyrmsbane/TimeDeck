@@ -59,11 +59,13 @@ namespace JamesWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,StartTime,EndTime")] TimeClock timeClock)
+        public async Task<IActionResult> Create([Bind("Id,UserName,StartTime,EndTime,TimeWorked")] TimeClock timeClock)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(timeClock);
+                //calculates the difference between the startime and endtime
+                timeClock.TimeWorked = timeClock.EndTime.Subtract(timeClock.StartTime);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -93,7 +95,7 @@ namespace JamesWebApp.Controllers
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,StartTime,EndTime")] TimeClock timeClock)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,StartTime,EndTime,TimeWorked")] TimeClock timeClock)
         {
             if (id != timeClock.Id)
             {
@@ -105,6 +107,7 @@ namespace JamesWebApp.Controllers
                 try
                 {
                     _context.Update(timeClock);
+                    timeClock.TimeWorked = timeClock.EndTime.Subtract(timeClock.StartTime);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
