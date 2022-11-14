@@ -1,4 +1,4 @@
-﻿@model JamesWebApp.Models.TimeClock
+﻿@model JamesWebApp.Models.TimeOff
 
 @{
     ViewData["Title"] = "Create";
@@ -7,7 +7,7 @@
 
 <h1>Create</h1>
 
-<h4>TimeClock</h4>
+<h4>TimeOff</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -18,27 +18,20 @@
                 <input asp-for="UserName" class="form-control" />
                 <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
-                <label asp-for="StartTime" class="control-label"></label>
-                <input asp-for="StartTime" class="form-control" />
-                <span asp-validation-for="StartTime" class="text-danger"></span>
+                <label asp-for="PaidTimeOff" class="control-label"></label>
+                <input asp-for="PaidTimeOff" class="form-control" />
+                <span asp-validation-for="PaidTimeOff" class="text-danger"></span>
             </div>
-
-
             <div class="form-group">
-                <label asp-for="EndTime" class="control-label"></label>
-                <input asp-for="EndTime" class="form-control" />
-                <span asp-validation-for="EndTime" class="text-danger"></span>
+                <label asp-for="DateOne" class="control-label"></label>
+                <input asp-for="DateOne" class="form-control" />
+                <span asp-validation-for="DateOne" class="text-danger"></span>
             </div>
-
             <div class="form-group">
-                @*<label asp-for="TimeWorked" class="control-label"></label>
-                <input asp-for="TimeWorked" class="form-control" />
-                @*I dont want the user to be able to edit timeworked directly*@
-                @*<p>@Model.TimeWorked</p>*@
-                <span asp-validation-for="TimeWorked" class="text-danger"></span>
+                <label asp-for="DateTwo" class="control-label"></label>
+                <input asp-for="DateTwo" class="form-control" />
+                <span asp-validation-for="DateTwo" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -52,7 +45,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

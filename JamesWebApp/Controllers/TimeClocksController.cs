@@ -64,8 +64,10 @@ namespace JamesWebApp.Controllers
             if (ModelState.IsValid)
             {
                 _context.Add(timeClock);
-                //calculates the difference between the startime and endtime
-                timeClock.TimeWorked = timeClock.EndTime.Subtract(timeClock.StartTime);
+                if (timeClock.EndTime.HasValue) {
+                    //calculates the difference between the startime and endtime
+                    timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
+                }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -101,28 +103,31 @@ namespace JamesWebApp.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
-            {
-                try
+            
+                if (ModelState.IsValid)
                 {
-                    _context.Update(timeClock);
-                    timeClock.TimeWorked = timeClock.EndTime.Subtract(timeClock.StartTime);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TimeClockExists(timeClock.Id))
+                    try
                     {
-                        return NotFound();
+                        _context.Update(timeClock);
+                    if (timeClock.EndTime.HasValue) {
+                        timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
                     }
-                    else
+                        await _context.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!TimeClockExists(timeClock.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
-            }
+            
             return View(timeClock);
         }
 

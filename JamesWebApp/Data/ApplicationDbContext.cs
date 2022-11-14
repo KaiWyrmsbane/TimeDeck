@@ -11,5 +11,6 @@ namespace JamesWebApp.Data
         {
         }
         public DbSet<JamesWebApp.Models.TimeClock> TimeClock { get; set; }
+        public DbSet<JamesWebApp.Models.TimeOff> TimeOff { get; set; }
     }
 }
