@@ -42,7 +42,7 @@ namespace JamesWebApp.Controllers
             {
                 return NotFound();
             }
-
+            
             return View(timeClock);
         }
 

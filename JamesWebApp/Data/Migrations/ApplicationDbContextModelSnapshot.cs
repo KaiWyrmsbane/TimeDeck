@@ -44,7 +44,7 @@ namespace JamesWebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TimeClock");
+                    b.ToTable("TimeClock", (string)null);
                 });
 
             modelBuilder.Entity("JamesWebApp.Models.TimeOff", b =>
@@ -72,7 +72,7 @@ namespace JamesWebApp.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TimeOff");
+                    b.ToTable("TimeOff", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
