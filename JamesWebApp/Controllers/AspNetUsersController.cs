@@ -39,7 +39,19 @@ namespace JamesWebApp.Controllers
             {
                 Id = user.Id,
                 UserName = user.UserName,
-                Email = user.Email
+                Email = user.Email,
+                NormalizedUserName = user.NormalizedUserName,
+                NormalizedEmail = user.NormalizedEmail,
+                EmailConfirmed = user.EmailConfirmed,
+                PasswordHash = user.PasswordHash,
+                SecurityStamp = user.SecurityStamp,
+                ConcurrencyStamp = user.ConcurrencyStamp,
+                PhoneNumber = user.PhoneNumber,
+                PhoneNumberConfirmed = user.PhoneNumberConfirmed,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                LockoutEnabled = user.LockoutEnabled,
+                LockoutEnd = user.LockoutEnd,
+                AccessFailedCount = user.AccessFailedCount,
             };
         }
 
@@ -72,7 +84,7 @@ namespace JamesWebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUsers aspNetUsers)
+        public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] IdentityUser aspNetUsers)
         {
             if (ModelState.IsValid)
             {
@@ -99,12 +111,9 @@ namespace JamesWebApp.Controllers
             return View(ConvertUser(Users));
         }
 
-        // POST: AspNetUsers/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] AspNetUsers aspNetUsers)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] IdentityUser aspNetUsers)
         {
             if (id != aspNetUsers.Id)
             {
@@ -115,6 +124,9 @@ namespace JamesWebApp.Controllers
             {
                 try
                 {
+                    //var user = new IdentityUser();
+                    //await _context.SaveChangesAsync();
+                    ConvertUser(aspNetUsers);
                     _context.Update(aspNetUsers);
                     await _context.SaveChangesAsync();
                 }
