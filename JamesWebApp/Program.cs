@@ -1,8 +1,11 @@
 using JamesWebApp.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<RandomContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("RandomContext") ?? throw new InvalidOperationException("Connection string 'RandomContext' not found.")));
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");

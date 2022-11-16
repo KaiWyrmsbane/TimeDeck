@@ -1,0 +1,31 @@
+<div class="container" style="float:left;">
+<table class="table col-6">
+    <tbody>
+        <tr>
+            <td>
+                <h3>UserName</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Date</h3>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>Time</h3>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+                <p>edit | Details | Delete</p>
+            </td>
+        </tr>
+    </tfoot>
+</table>
+</div>
+<div class="container"style="float:right;">
+<button class="btn btn-primary col-6">ClockIn</button>
+</div>
