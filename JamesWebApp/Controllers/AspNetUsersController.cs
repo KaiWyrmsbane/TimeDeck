@@ -24,6 +24,7 @@ namespace JamesWebApp.Controllers
         public async Task<IActionResult> Index()
         {
             var IdentityUsers =await _context.Users.ToListAsync();
+            //Created a list
             var Aspnetusers = new List<AspNetUsers>();
             foreach (var user in IdentityUsers)
             {
