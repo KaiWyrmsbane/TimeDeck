@@ -24,7 +24,7 @@ namespace JamesWebApp.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-              return View(await _context.TimeClock.ToListAsync());
+            return View(await _context.TimeClock.ToListAsync());
         }
 
         // GET: TimeClocks/Details/5
@@ -88,6 +88,7 @@ namespace JamesWebApp.Controllers
             {
                 return NotFound();
             }
+            //timeClock.StartTime = 
             return View(timeClock);
         }
 
