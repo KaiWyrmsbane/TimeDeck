@@ -19,13 +19,11 @@ namespace JamesWebApp.Controllers
             _context = context;
         }
 
-        // GET: TimeOffs
         public async Task<IActionResult> Index()
         {
               return View(await _context.TimeOff.ToListAsync());
         }
 
-        // GET: TimeOffs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.TimeOff == null)
@@ -43,15 +41,11 @@ namespace JamesWebApp.Controllers
             return View(timeOff);
         }
 
-        // GET: TimeOffs/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TimeOffs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,PaidTimeOff,DateOne,DateTwo,Vacation")] TimeOff timeOff)
@@ -62,6 +56,7 @@ namespace JamesWebApp.Controllers
                 if (timeOff.DateTwo.HasValue)
                 {
                     timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
+                    timeOff.PaidTimeOff = timeOff.PaidTimeOff - timeOff.Vacation;
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,7 +64,6 @@ namespace JamesWebApp.Controllers
             return View(timeOff);
         }
 
-        // GET: TimeOffs/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.TimeOff == null)
@@ -85,9 +79,7 @@ namespace JamesWebApp.Controllers
             return View(timeOff);
         }
 
-        // POST: TimeOffs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,PaidTimeOff,DateOne,DateTwo,Vacation")] TimeOff timeOff)
@@ -104,8 +96,7 @@ namespace JamesWebApp.Controllers
                     _context.Update(timeOff);
                     if (timeOff.DateTwo.HasValue)
                     {
-                        //trying to convert Vacation to days
-                        //TimeSpan.Days
+                        //Gives us the number of days the user will be taking off
                         timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
                     }
                     await _context.SaveChangesAsync();
@@ -126,7 +117,6 @@ namespace JamesWebApp.Controllers
             return View(timeOff);
         }
 
-        // GET: TimeOffs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.TimeOff == null)
@@ -140,11 +130,9 @@ namespace JamesWebApp.Controllers
             {
                 return NotFound();
             }
-
             return View(timeOff);
         }
 
-        // POST: TimeOffs/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

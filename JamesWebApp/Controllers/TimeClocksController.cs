@@ -20,14 +20,12 @@ namespace JamesWebApp.Controllers
             _context = context;
         }
 
-        // GET: TimeClocks
         [Authorize]
         public async Task<IActionResult> Index()
         {
               return View(await _context.TimeClock.ToListAsync());
         }
 
-        // GET: TimeClocks/Details/5
         [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,16 +44,13 @@ namespace JamesWebApp.Controllers
             return View(timeClock);
         }
 
-        // GET: TimeClocks/Create
         [Authorize]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TimeClocks/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -79,18 +74,18 @@ namespace JamesWebApp.Controllers
             }
             catch (Exception Error)
             {
-                var file = System.IO.File.AppendText("Error.txt");
-                file.WriteLine(Error.Message);
-                file.Close();
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
+                
             }
        
             return View(timeClock);
         }
 
-        // GET: TimeClocks/Edit/5
         [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
+          
             if (id == null || _context.TimeClock == null)
             {
                 return NotFound();
@@ -104,27 +99,27 @@ namespace JamesWebApp.Controllers
             return View(timeClock);
         }
 
-        // POST: TimeClocks/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,StartTime,EndTime,TimeWorked")] TimeClock timeClock)
         {
-            if (id != timeClock.Id)
+            try
             {
-                return NotFound();
-            }
-            
+                if (id != timeClock.Id)
+                {
+                    return NotFound();
+                }
+
                 if (ModelState.IsValid)
                 {
                     try
                     {
                         _context.Update(timeClock);
-                    if (timeClock.EndTime.HasValue) {
-                        timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
-                    }
+                        if (timeClock.EndTime.HasValue)
+                        {
+                            timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
+                        }
                         await _context.SaveChangesAsync();
                     }
                     catch (DbUpdateConcurrencyException)
@@ -140,11 +135,17 @@ namespace JamesWebApp.Controllers
                     }
                     return RedirectToAction(nameof(Index));
                 }
+            }
+            catch(Exception Error)
+            {
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
+            }
+        
             
             return View(timeClock);
         }
 
-        // GET: TimeClocks/Delete/5
         [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -163,7 +164,6 @@ namespace JamesWebApp.Controllers
             return View(timeClock);
         }
 
-        // POST: TimeClocks/Delete/5
         [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]

@@ -20,7 +20,6 @@ namespace JamesWebApp.Controllers
             _context = context;
         }
 
-        // GET: AspNetUsers
         public async Task<IActionResult> Index()
         {
             var IdentityUsers =await _context.Users.ToListAsync();
@@ -55,7 +54,6 @@ namespace JamesWebApp.Controllers
             };
         }
 
-        // GET: AspNetUsers/Details/5
         public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Users == null)
@@ -73,15 +71,11 @@ namespace JamesWebApp.Controllers
             return View(ConvertUser(user));
         }
 
-        // GET: AspNetUsers/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: AspNetUsers/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] IdentityUser aspNetUsers)
@@ -95,7 +89,7 @@ namespace JamesWebApp.Controllers
             return View(aspNetUsers);
         }
 
-        // GET: AspNetUsers/Edit/5
+
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Users == null)
@@ -124,8 +118,7 @@ namespace JamesWebApp.Controllers
             {
                 try
                 {
-                    //var user = new IdentityUser();
-                    //await _context.SaveChangesAsync();
+                  
                     ConvertUser(aspNetUsers);
                     _context.Update(aspNetUsers);
                     await _context.SaveChangesAsync();
@@ -146,7 +139,6 @@ namespace JamesWebApp.Controllers
             return View(aspNetUsers);
         }
 
-        // GET: AspNetUsers/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Users == null)
@@ -164,7 +156,6 @@ namespace JamesWebApp.Controllers
             return View(ConvertUser(user));
         }
 
-        // POST: AspNetUsers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
