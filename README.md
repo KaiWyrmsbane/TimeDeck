@@ -15,11 +15,10 @@ page the user will be able to see the number of PTO hours they have and the rene
 ![image](https://user-images.githubusercontent.com/70355800/196060227-1adca2df-6020-4437-9868-23976b197706.png)
 
 ## Features Used In Project
-1. 3 Unit Test
+1. Created a Regular Expression Regex In my AspNetUser model.
 2. Comments explaining how you use at least 2 solid principles
 3. Implement a log that records errors, invalid inputs, or other important events and writes them to a text file
-4. Make a generic class and use it
-5. Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
+4. Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
 
 ## How to install this example and see how it works
 1. Install Visual Studio 2022
