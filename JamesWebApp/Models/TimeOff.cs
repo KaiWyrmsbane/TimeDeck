@@ -1,4 +1,6 @@
-﻿namespace JamesWebApp.Models
+﻿using System.Configuration;
+
+namespace JamesWebApp.Models
 {
     public class TimeOff
     {
@@ -7,6 +9,6 @@
         public double PaidTimeOff { get; set; }
         public DateTime DateOne { get; set; }
         public DateTime ?DateTwo { get; set; }
-        public TimeSpan Vacation { get; set; }
+        public int Vacation { get; set; }
     }
 }

@@ -61,16 +61,29 @@ namespace JamesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,StartTime,EndTime,TimeWorked")] TimeClock timeClock)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(timeClock);
-                if (timeClock.EndTime.HasValue) {
-                    //calculates the difference between the startime and endtime
-                    timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
+                //throw new Exception("Error");
+                if (ModelState.IsValid)
+                {
+                    _context.Add(timeClock);
+                    if (timeClock.EndTime.HasValue)
+                    {
+                        //calculates the difference between the startime and endtime
+                        timeClock.TimeWorked = timeClock.EndTime.Value.Subtract(timeClock.StartTime);
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                
             }
+            catch (Exception Error)
+            {
+                var file = System.IO.File.AppendText("Error.txt");
+                file.WriteLine(Error.Message);
+                file.Close();
+            }
+       
             return View(timeClock);
         }
 

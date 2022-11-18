@@ -4,18 +4,16 @@ using JamesWebApp.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace JamesWebApp.Data.Migrations
+namespace JamesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221112195858_addedTimeClockTimeWorked")]
-    partial class addedTimeClockTimeWorked
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,14 +30,14 @@ namespace JamesWebApp.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<DateTime?>("EndTime")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("TimeWorked")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeSpan>("TimeWorked")
+                        .HasColumnType("time");
 
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
@@ -47,6 +45,34 @@ namespace JamesWebApp.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("TimeClock");
+                });
+
+            modelBuilder.Entity("JamesWebApp.Models.TimeOff", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateOne")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DateTwo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("PaidTimeOff")
+                        .HasColumnType("float");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Vacation")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TimeOff");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

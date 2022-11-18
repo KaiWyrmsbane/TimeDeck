@@ -61,7 +61,7 @@ namespace JamesWebApp.Controllers
                 _context.Add(timeOff);
                 if (timeOff.DateTwo.HasValue)
                 {
-                    timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne);
+                    timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
                 }
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -104,7 +104,9 @@ namespace JamesWebApp.Controllers
                     _context.Update(timeOff);
                     if (timeOff.DateTwo.HasValue)
                     {
-                        timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne);
+                        //trying to convert Vacation to days
+                        //TimeSpan.Days
+                        timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
                     }
                     await _context.SaveChangesAsync();
                 }

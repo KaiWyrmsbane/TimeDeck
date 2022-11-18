@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace JamesWebApp.Data.Migrations
+namespace JamesWebApp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221114184523_editedtimeofftable")]
-    partial class editedtimeofftable
+    [Migration("20221117234822_initailCreation")]
+    partial class initailCreation
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,8 +69,8 @@ namespace JamesWebApp.Data.Migrations
                     b.Property<string>("UserName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("Vacation")
-                        .HasColumnType("time");
+                    b.Property<int>("Vacation")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
