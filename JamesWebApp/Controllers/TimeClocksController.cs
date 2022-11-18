@@ -11,6 +11,14 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace JamesWebApp.Controllers
 {
+    //------- 1 --------
+    //My Controllers use the "Dependency Inversion Principle" of Solid principles
+    //I'm injecting my ApplicationDbContext into the controllers themselves
+    //Having my controllers deal with the rules or logic of the system
+    //while the CRUD methods deal with the finer detailed operations.
+    //------- 2 --------
+    //My Controllers, CRUD methods, and ErrorLog class use the "Single Responsibility Principle" of Solid principles
+    //Each have their own unique job that no other method, or class replicates that job across the entire Web App
     public class TimeClocksController : Controller
     {
         private readonly ApplicationDbContext _context;
