@@ -50,17 +50,27 @@ namespace JamesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,PaidTimeOff,DateOne,DateTwo,Vacation")] TimeOff timeOff)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(timeOff);
-                if (timeOff.DateTwo.HasValue)
+                if (ModelState.IsValid)
                 {
-                    timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
-                    timeOff.PaidTimeOff = timeOff.PaidTimeOff - timeOff.Vacation;
+                    _context.Add(timeOff);
+                    if (timeOff.DateTwo.HasValue)
+                    {
+                        timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
+                        timeOff.PaidTimeOff = timeOff.PaidTimeOff - timeOff.Vacation;
+                    }
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return View(timeOff);
             }
+            catch (Exception Error)
+            {
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
+            }
+           
             return View(timeOff);
         }
 
@@ -84,36 +94,46 @@ namespace JamesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,PaidTimeOff,DateOne,DateTwo,Vacation")] TimeOff timeOff)
         {
-            if (id != timeOff.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != timeOff.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                    _context.Update(timeOff);
-                    if (timeOff.DateTwo.HasValue)
+                    try
                     {
-                        //Gives us the number of days the user will be taking off
-                        timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
+                        _context.Update(timeOff);
+                        if (timeOff.DateTwo.HasValue)
+                        {
+                            //Gives us the number of days the user will be taking off
+                            timeOff.Vacation = timeOff.DateTwo.Value.Subtract(timeOff.DateOne).Days;
+                            timeOff.PaidTimeOff = timeOff.PaidTimeOff - timeOff.Vacation;
+                        }
+                        await _context.SaveChangesAsync();
                     }
-                    await _context.SaveChangesAsync();
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!TimeOffExists(timeOff.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
+                    return RedirectToAction(nameof(Index));
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!TimeOffExists(timeOff.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
             }
+            catch (Exception Error)
+            {
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
+            }
+           
             return View(timeOff);
         }
 

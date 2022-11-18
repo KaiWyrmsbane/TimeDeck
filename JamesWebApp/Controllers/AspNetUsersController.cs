@@ -80,11 +80,20 @@ namespace JamesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] IdentityUser aspNetUsers)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(aspNetUsers);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (ModelState.IsValid)
+                {
+                    _context.Add(aspNetUsers);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+            
+            catch (Exception Error)
+            {
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
             }
             return View(aspNetUsers);
         }
@@ -109,33 +118,42 @@ namespace JamesWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, [Bind("Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] IdentityUser aspNetUsers)
         {
-            if (id != aspNetUsers.Id)
+            try
             {
-                return NotFound();
-            }
+                if (id != aspNetUsers.Id)
+                {
+                    return NotFound();
+                }
 
-            if (ModelState.IsValid)
-            {
-                try
+                if (ModelState.IsValid)
                 {
-                  
-                    ConvertUser(aspNetUsers);
-                    _context.Update(aspNetUsers);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AspNetUsersExists(aspNetUsers.Id))
+                    try
                     {
-                        return NotFound();
+
+                        ConvertUser(aspNetUsers);
+                        _context.Update(aspNetUsers);
+                        await _context.SaveChangesAsync();
                     }
-                    else
+                    catch (DbUpdateConcurrencyException)
                     {
-                        throw;
+                        if (!AspNetUsersExists(aspNetUsers.Id))
+                        {
+                            return NotFound();
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
+                    return RedirectToAction(nameof(Index));
                 }
-                return RedirectToAction(nameof(Index));
             }
+            catch (Exception Error) 
+            {
+                var logger = new ErrorLog();
+                logger.ErrorLogger(Error);
+            }
+            
             return View(aspNetUsers);
         }
 
