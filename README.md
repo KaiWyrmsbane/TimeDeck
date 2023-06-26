@@ -1,6 +1,3 @@
- 5 changes: 2 additions & 3 deletions5  
-README.md
-@@ -1,25 +1,24 @@
 # James Time Management Web App (TimeDeck)
 ## An example of a simple yet informative way for employees to keep track of their hours worked, PTO time left, and personal settings on account.
 This project shows one of the ways a time management system could work. How to build the logic behind that system
