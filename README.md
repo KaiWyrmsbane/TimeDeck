@@ -1,43 +1,39 @@
-# Lawnmower Website
-
-## I'm building a website were people can shop for lawnmowers. Users will be able filter their searches using: brand, year, motor size, deck size, mower type, price, and mower status, The site will also compare prices with other businesses nearby. The website will also have an about, and contact page for people who wish to contact the website owner.
-
-This website will use HTML, CSS, bootstrap, and java-script to build a lawnmower dealership website, making is easier for people to find lawn mowers for a great price.
-
+ 5 changes: 2 additions & 3 deletions5  
+README.md
+@@ -1,25 +1,24 @@
+# James Time Management Web App (TimeDeck)
+## An example of a simple yet informative way for employees to keep track of their hours worked, PTO time left, and personal settings on account.
+This project shows one of the ways a time management system could work. How to build the logic behind that system
+using the C#, ASP.NET, and EF Core. In this system an employee will be able to:
 * Create an account then sign in with that account
 * Clock-in and out and receive the number of hours worked when clocked-out. On the same 
 page the user will be able to see the number of PTO hours they have and the renewal date of their PTO.
 * Decide to take time off on specific days whether it be Vacation, Sick, or emergency time while seeing PTO renewal date.
 * Edit account settings such as name, email, password, etc.
-
 ## Wireframe
-coming soon
+![image](https://user-images.githubusercontent.com/70355800/196060227-1adca2df-6020-4437-9868-23976b197706.png)
 
 ## Features Used In Project
-1. Use arrays,objects, sets or maps to store and retrieve information that is displayed in app.
-2. Analyze data that is stored in arrays, objects, sets or maps and display information about it in your app.
-3. interact with a database to store and retrieve information 
-4. Retrieve data from a third-party API and use it to display something within your app
+1. 3 Unit Test
+1. Created a Regular Expression Regex In my AspNetUser model.
+2. Comments explaining how you use at least 2 solid principles
+3. Implement a log that records errors, invalid inputs, or other important events and writes them to a text file
+4. Make a generic class and use it
+5. Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
+4. Implement a regular expression (regex) to ensure a field either a phone number or an email address is always stored and displayed in the same format
 
 ## How to install this example and see how it works
-1. Install Visual Studio Code
-2. clone this project from Github
-3. Then you will be able to run the code from there
-4. Or if you just want to check out the site then visit here: ??????  
-
+1. Install Visual Studio 2022
+2. clone this project
+3. Then run the project in visual studio  
 ## Feel free to contribute or edit this project for your own uses
 You can do so by cloning the project, then pushing your own code towards the project. Or clone and rename, to add to
 your very own project that you're working on.
-
 ## Contributors
 If you find a bug or think of a feature that is new or better, please follow this pull request template to make this a better project
 to help others.
-
 ### What kind of change does this PR introduce?
-
 ### Screenshots (if appropriate):
-
 ### Other information
-
 ## Known issues
 (None reported)
